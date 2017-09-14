@@ -1,0 +1,47 @@
+进入官网找到第三方网站ApacheHaus下载windows版本
+下载后解压
+
+cmd到apache下bin目录
+输入httpd -k install
+
+找到D:\application_software\Apache\conf\httpd.conf文件，用记事本打开，找到：Define SRVROOT 这一项，将其右方的值改为
+当前你Apache安装存放的目录地址
+
+
+继续找，找到：Listene 80
+若你的80端口被占用（可在cmd下用命令netstat -a查看），则将80端口改为别的
+保存httpd.conf文件。
+
+接下来需要配置安装Apache的主服务，有了它，Apache才可启动：
+打开CMD窗口，输入："D:\application_software\Apache\bin\httpd.exe" -k install -n apache
+切记，包含引号。该命令的意思是，安装apache服务，并将该服务名称命名为apache(你也可以改成别的)，回车。
+服务安装完毕，完毕后，会自动测试，若有问题，窗口会提示错误，此时，请根据错误自行排查。
+正常安装完毕如下图所示：
+其中，Errors reported here must be corrected before the service can be started.意思是，
+若该句话后面有错误信息，则表示服务安装失败，需要先改正错误。若没有，则成功。
+
+在安装目录中，找到D:\application_software\Apache\bin\ApacheMonitor.exe可执行文件，双击运行，
+桌面右下角会出现图标，双击打开窗口界面
+
+点击左侧start，启动apache服务。
+补充句，从该界面可看出，其可以手动控制服务的开启与关闭，为了节省资源，关闭Apache服务器的时候，请先点击“Stop”关闭apache服务。
+当然，该服务也可以在windows系统服务中关闭（建议设置成手动）
+
+打开浏览器，输入访问
+http://localhost
+如显示图形界面，则配置完毕
+
+由于apache默认是监听80端口，如果你的电脑iis是启动状态，并且也使用了80端口，apache将无法正常启动，
+需要先停止iis，另外迅雷也可能会使用80端口，所以也要关闭迅雷。查看80端口是否被占用，命令行下输入：
+netstat -aon|findstr "80"
+如果看到如图的结果，说明80端口已被使用，需要先关闭相关软件，或者修改apache默认的监听端口
+打开apache目录下的conf/httpd.conf  搜索   "Listen 80"
+修改为Listen 8088
+保存之后再重新启动apache
+
+httpd.conf 添加
+ScriptInterpreterSource Registry
+Options Indexes FollowSymLinks ExecCGI
+AddHandler cgi-script .cgi .pl .py
+
+
