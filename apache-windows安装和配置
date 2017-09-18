@@ -1,3 +1,4 @@
+Windows
 进入官网找到第三方网站ApacheHaus下载windows版本
 下载后解压
 
@@ -45,3 +46,31 @@ Options Indexes FollowSymLinks ExecCGI
 AddHandler cgi-script .cgi .pl .py
 
 
+
+
+Ubuntu
+安装apache，在命令行终端中输入一下命令：
+
+$ sudo apt-get install apache2
+
+安装完成后，重启apache服务，在命令行终端中输入一下命令：
+
+$ sudo /etc/init.d/apache2 restart
+
+
+
+删除apache
+在命令行中输入:
+$ sudo apt-get --purge remove apache-common
+$ sudo apt-get --purge remove apache
+
+
+找到没有删除掉的配置文件，一并删除
+代码:
+$ sudo find /etc -name "*apache*" |xargs rm -rf
+$ sudo rm -rf /var/www
+$sudo rm -rf /etc/libapache2-mod-jk
+
+
+删除关联，这样就可以再次用apt-get install apache2 重装了
+#dpkg -l |grep apache2|awk '{print $2}'|xargs dpkg -P
